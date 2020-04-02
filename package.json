@@ -1,0 +1,36 @@
+{
+  "name": "coronaTime",
+  "version": "1.0.0",
+  "description": "Current COVID19 cases(active cases, deaths, recoveries and other stuff)each country.",
+  "main": "index.js",
+  "scripts": {
+    "knex": "knex",
+    "dev": "nodemon --ext js,hbs index.js",
+    "test": "jest --watch --noStackTrace",
+    "start": "node index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pmtevgonzales/coronaTime.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pmtevgonzales/coronaTime/issues"
+  },
+  "homepage": "https://github.com/pmtevgonzales/coronaTime#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cheerio": "^1.0.0-rc.3",
+    "express": "^4.17.1",
+    "express-handlebars": "^4.0.1",
+    "knex": "^0.20.13",
+    "sqlite3": "^4.1.1"
+  },
+  "devDependencies": {
+    "jest": "^25.2.4",
+    "nodemon": "^2.0.2",
+    "supertest": "^4.0.2"
+  }
+}
