@@ -1,9 +1,10 @@
-
 const express = require('express')
 
-const db = require('../db')
+const db = require('../dbFile')
 
 const router = express.Router()
+
+
 //Code below are samples: YOU still need to edit this one.
 router.get('/', (req, res) => {
     db.getUsers()
