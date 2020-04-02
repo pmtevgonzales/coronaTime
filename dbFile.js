@@ -18,7 +18,9 @@ function read() {
     fetch(url, settings)
         .then(res => res.json())
         .then((json) => {
-            console.log(json)
+            json["New Zealand"].forEach(({ date, confirmed, recovered, deaths }) => 
+            console.log(`${date} active cases: ${confirmed - recovered - deaths}`)
+            )
         })
 }
 
