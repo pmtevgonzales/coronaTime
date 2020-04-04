@@ -8,7 +8,8 @@ const fetch = require('node-fetch')
 module.exports = {
     getLatestData,
     getCountries,
-    saveLatestData
+    saveLatestData,
+    initialiseCountry
 }
 
 function getLatestData() {
@@ -40,8 +41,24 @@ function saveLatestData(casesByCountry) {
     })
 }
 
-// function saveCountries()
+function initialiseCountry(db = connection) {
+    return db('country').del()
+    .then(function () {
+        getCountries().then((c) => {
+            var countries = Object.keys(c)
+            countries.forEach((country) => {
+                db('country').insert({
+                    country: country,
+                    flag: c[country].flag,
+                    code: c[country].code
+                })
+                .then()
+            })
+        })
+    })
+}
 
+initialiseCountry()
 // var latestData = getLatestData()
 
 // saveLatestData(latestData)
