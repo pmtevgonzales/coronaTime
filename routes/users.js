@@ -8,14 +8,15 @@ const utilities = require('../utilities')
 
 module.exports = router
 
-//routes for getGlobalData
+//routes for mainPage
 router.get('/', (req, res) => {
   const template = 'homeGlobal'
   db.getGlobalData()
   .then((global) => {
-    const viewData = {
+      const viewData = {
       currentDate: utilities.dateToday(),
-      confirmedCases: global.confirmedCase,
+      caseDate: utilities.formatDate(global.caseDate),
+      confirmedCases: global.confirmedCases,
       deaths: global.deaths,
       recovered: global.recovered
     }
