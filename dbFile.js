@@ -9,7 +9,8 @@ module.exports = {
     getTimeseriesFromJSON,
     getCountriesFromJSON,
     saveLatestData,
-    initialiseCountry
+    initialiseCountry,
+    getGlobalData,
 }
 //to have the JSON file as object 
 function getTimeseriesFromJSON() {
@@ -71,5 +72,24 @@ function initialiseCountry(db = connection) {
                 .then()
             })
         })
+    })
+}
+
+//function for getting the timeseries records
+function getGlobalData(db = connection) {
+    let today = new Date();
+    let dd = String(today.getDate()-1);
+    let mm = String(today.getMonth() + 1); 
+    let yyyy = today.getFullYear();
+
+    today = yyyy + '-' + mm + '-' + dd;
+    return db('timeseries')
+    .where('case_date',today)
+    .select('confirmed_cases', 'deaths', 'recovered')
+    .then((cases) => {
+        let confirmedCase = cases.map(c => c.confirmed_cases).reduce((a, b) => a + b);
+        let deaths = cases.map(c => c.deaths).reduce((a, b) => a + b);
+        let recovered = cases.map(c => c.recovered).reduce((a, b) => a + b);
+        return {confirmedCase, deaths, recovered}
     })
 }
