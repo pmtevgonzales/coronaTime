@@ -11,6 +11,7 @@ module.exports = {
     saveLatestData,
     initialiseCountry,
     getGlobalData,
+    selectCountryDrop
 }
 //to have the JSON file as object 
 function getTimeseriesFromJSON() {
@@ -76,9 +77,10 @@ function initialiseCountry(db = connection) {
 }
 
 //function for getting the timeseries records
+//NOTE!!!!need to work on having the data dates updated and need to change the query accdg to my database
 function getGlobalData(db = connection) {
     let today = new Date();
-    let dd = String(today.getDate()-1);
+    let dd = String(today.getDate()-2);// change the numbers
     let mm = String(today.getMonth() + 1); 
     let yyyy = today.getFullYear();
 
@@ -94,4 +96,8 @@ function getGlobalData(db = connection) {
     })
 }
 
-//
+//function for the dropdown select country
+function selectCountryDrop(db = connection) {
+    return db('country')
+    .select('id', 'country', 'flag')
+}

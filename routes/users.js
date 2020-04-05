@@ -19,9 +19,14 @@ router.get('/', (req, res) => {
       deaths: global.deaths,
       recovered: global.recovered
     }
-    res.render(template, viewData)
+    db.selectCountryDrop().then(c =>{
+      c.unshift({})
+      viewData.countries = c
+      res.render(template, viewData)
+    })
   })
   .catch(err => {
     res.status(500).send('DATABASE ERROR: ' + err.message)
   })
 })
+

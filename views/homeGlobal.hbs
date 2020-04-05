@@ -9,3 +9,11 @@
         <li>Deaths: {{deaths}}</li>
     </ul>
 </div>
+<div>
+    <label>Select Country:</label>
+    <select name="config[countries]">
+        {{#each countries}}
+        <option value="{{id}}">{{country}}{{flag}}</option>
+        {{/each}}
+    </select>
+</div>
