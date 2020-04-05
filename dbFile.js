@@ -93,3 +93,5 @@ function getGlobalData(db = connection) {
         return {confirmedCase, deaths, recovered}
     })
 }
+
+//
