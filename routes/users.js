@@ -4,14 +4,21 @@ const db = require('../dbFile')
 
 const router = express.Router()
 
+module.exports = router
 
-//Code below are samples: YOU still need to edit this one.
+//routes for getGlobalData
 router.get('/', (req, res) => {
-    db.getUsers()
-      .then(users => {
-        res.render('index', {users: users})
-      })
-      .catch(err => {
-        res.status(500).send('DATABASE ERROR: ' + err.message)
-      })
+  const template = 'homeGlobal'
+  db.getGlobalData()
+  .then((global) => {
+    const viewData = {
+      confirmedCases: global.confirmedCase,
+      deaths: global.deaths,
+      recovered: global.recovered
+    }
+    res.render(template, viewData)
   })
+  .catch(err => {
+    res.status(500).send('DATABASE ERROR: ' + err.message)
+  })
+})
