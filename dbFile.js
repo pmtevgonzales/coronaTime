@@ -114,3 +114,5 @@ function selectCountryDrop(db = connection) {
 // var latest = getGlobalData().then((c) =>{
 //    console.log(c) 
 // })
+
+// saveLatestData(getTimeseriesFromJSON())
