@@ -31,3 +31,11 @@ router.get('/', (req, res) => {
   })
 })
 
+
+//routes for refreshing the mainpage
+// router.post ('/latestupdate', (req, res) => {
+//   db.saveLatestData(db.getTimeseriesFromJSON())
+//   .then((cases) => {
+//     return res.redirect ('/')
+//   })
+// })
