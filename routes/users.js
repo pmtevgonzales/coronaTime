@@ -12,13 +12,13 @@ module.exports = router
 router.get('/', (req, res) => {
   const template = 'homeGlobal'
   db.getGlobalData()
-  .then((global) => {
+  .then((globalData) => {
       const viewData = {
       currentDate: utilities.dateToday(),
-      caseDate: utilities.formatDate(global.caseDate),
-      confirmedCases: global.confirmedCases,
-      deaths: global.deaths,
-      recovered: global.recovered
+      caseDate: utilities.formatDate(globalData.caseDate),
+      confirmedCases: globalData.confirmedCases,
+      deaths: globalData.deaths,
+      recovered: globalData.recovered
     }
     db.selectCountryDrop().then(c =>{
       c.unshift({})
@@ -39,3 +39,29 @@ router.get('/', (req, res) => {
 //     return res.redirect ('/')
 //   })
 // })
+
+
+//router to link the on the selectedCountry page
+router.get('/country/:id', (req, res) => {
+  const id = parseInt(req.params.id)
+  const template = 'selectedCountry'
+  db.selectCountryData(id)
+    .then((country) => {
+      const countryDataToday = country[0]
+      const countryDataYesterday = country[1]
+      const viewData = {
+        countryName: countryDataToday.country,
+        countryFlag: countryDataToday.flag,
+        currentDate: utilities.dateToday(),
+        caseDate: utilities.formatDate(countryDataToday.caseDate),
+        cases: countryDataToday.confirmedCases,
+        deaths: countryDataToday.deaths,
+        recovered: countryDataToday.recovered,
+        casesToday: countryDataToday.confirmedCases - countryDataYesterday.confirmedCases,
+        deathsToday: countryDataToday.deaths - countryDataYesterday.deaths
+      }
+
+      res.render(template, viewData)
+    })
+
+})

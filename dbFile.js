@@ -11,7 +11,8 @@ module.exports = {
     saveLatestData,
     initialiseCountry,
     getGlobalData,
-    selectCountryDrop
+    selectCountryDrop,
+    selectCountryData
 }
 //to have the JSON file as object 
 function getTimeseriesFromJSON() {
@@ -109,6 +110,24 @@ function selectCountryDrop(db = connection) {
     return db('country')
     .select('id', 'country', 'flag')
 }
+
+//function to know the details on the selected country
+function selectCountryData(id, db = connection) {
+    return db ('timeseries')
+    .where('country_id', id)
+    .join('country', 'timeseries.country_id', 'country.id')
+    .select('country', 
+            'flag', 
+            'case_date as caseDate', 
+            'confirmed_cases as confirmedCases',
+            'deaths',
+            'recovered'
+            )
+    .groupBy('case_date')
+    .orderBy('case_date', 'desc')
+}
+
+
 
 
 // var latest = getGlobalData().then((c) =>{
