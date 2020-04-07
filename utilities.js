@@ -23,3 +23,11 @@ function formatDate(dateToFormat) {
 
     return formattedDate
 }
+
+// function myFunction() {
+//     let selectedCountry = document.getElementById('countries').value
+
+//     if( selectedCountry !== '') {
+//         window.location = "/country/"+selectedCountry
+//     }
+// } 
