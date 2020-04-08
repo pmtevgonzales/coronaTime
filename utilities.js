@@ -1,6 +1,7 @@
 module.exports = {
     dateToday,
-    formatDate
+    formatDate,
+    sleep
 }
 
 
@@ -11,7 +12,7 @@ function dateToday () {
     let tempDate = new Date();
     let currentDate = `${monthNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getFullYear()} ${tempDate.getHours()}:${tempDate.getMinutes()}:${tempDate.getSeconds()}`;
 
-    return currentDate
+    return tempDate.toString()
 }
 
 function formatDate(dateToFormat) {
@@ -23,6 +24,11 @@ function formatDate(dateToFormat) {
 
     return formattedDate
 }
+
+// sleep time expects milliseconds
+function sleep (time) {
+    return new Promise((resolve) => setTimeout(resolve, time));
+  }
 
 // function myFunction() {
 //     let selectedCountry = document.getElementById('countries').value

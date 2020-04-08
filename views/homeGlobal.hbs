@@ -1,6 +1,12 @@
 <h2> GLOBAL CASES </h2>
-<p><strong id="currentDate"></strong></p>
+<p><strong id="currentDate">{{currentDate}}</strong></p>
 <p><strong>As of {{caseDate}} </strong></p>
+<div>
+    <form method="POST" action="/latestUpdate">
+        <button type='submit'>Get Latest Update</button>
+    </form>
+</div>
+
 <div>
     <ul>
         <li>Confirmed Case: {{confirmedCases}}</li>
@@ -8,6 +14,7 @@
         <li>Deaths: {{deaths}}</li>
     </ul>
 </div>
+
 <div>
     <label>Select Country:</label>
     <form>

@@ -32,15 +32,6 @@ router.get('/', (req, res) => {
 })
 
 
-//routes for refreshing the mainpage
-// router.post ('/latestupdate', (req, res) => {
-//   db.saveLatestData(db.getTimeseriesFromJSON())
-//   .then((cases) => {
-//     return res.redirect ('/')
-//   })
-// })
-
-
 //router to link the on the selectedCountry page
 router.get('/country/:id', (req, res) => {
   const id = parseInt(req.params.id)
@@ -64,4 +55,15 @@ router.get('/country/:id', (req, res) => {
       res.render(template, viewData)
     })
 
+})
+
+// routes for refreshing the mainpage
+router.post ('/latestUpdate', (req, res) => {
+  db.saveLatestData(db.getTimeseriesFromJSON())
+  .then(() => {
+    utilities.sleep(1000)
+    .then(()=>{
+      return res.redirect ('/')
+    })
+  })
 })

@@ -35,8 +35,8 @@ function getCountriesFromJSON() {
 //insert the object from the JSON to the database/sqlite
 
 function saveLatestData(casesByCountry, db = connection) {
-    casesByCountry.then((c) => {
-        var latestData = Object.keys(c)
+    return casesByCountry.then((c) => {
+        let latestData = Object.keys(c)
         latestData.forEach((country) => {
             db('timeseries')
             .join('country', 'timeseries.country_id', 'country.id')
