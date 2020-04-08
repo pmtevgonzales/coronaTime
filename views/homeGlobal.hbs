@@ -1,5 +1,5 @@
 <h2> GLOBAL CASES </h2>
-<p><strong>{{currentDate}}</strong></p>
+<p><strong id="currentDate"></strong></p>
 <p><strong>As of {{caseDate}} </strong></p>
 <div>
     <ul>
@@ -21,11 +21,22 @@
 </div>
 
 <script>
-    function myFunction() {
-    let selectedCountry = document.getElementById('countries').value
-
-    if( selectedCountry !== '') {
-        window.location = "/country/"+selectedCountry
+    window.onload = function() {
+        /* Update the date every second */
+        window.setInterval(function() {
+            updateDate()
+        }, 1000)
     }
-} 
+
+    function updateDate() {
+        document.getElementById('currentDate').innerHTML = (new Date()).toString()
+    }
+
+    function myFunction() {
+        let selectedCountry = document.getElementById('countries').value
+
+        if( selectedCountry !== '') {
+            window.location = "/country/"+selectedCountry
+        }
+    } 
 </script>

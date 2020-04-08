@@ -1,6 +1,5 @@
-<h2>{{countryName}}</h2>
-<h2>{{countryFlag}}</h2>
-<p><strong>{{currentDate}}</strong></p>
+<h2>{{countryName}}{{countryFlag}}</h2>
+<p><strong id="currentDate"></strong></p>
 <p><strong>As of {{caseDate}} </strong></p>
 <div>
     <ul>
@@ -11,3 +10,16 @@
         <li>Deaths Today: {{deathsToday}}</li>
     </ul>
 </div>
+
+<script>
+    window.onload = function() {
+        /* Update the date every second */
+        window.setInterval(function() {
+            updateDate()
+        }, 1000)
+    }
+
+    function updateDate() {
+        document.getElementById('currentDate').innerHTML = (new Date()).toString()
+    }
+</script>
