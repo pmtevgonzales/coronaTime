@@ -33,32 +33,78 @@ function getCountriesFromJSON() {
 }
 
 //insert the object from the JSON to the database/sqlite
+
 function saveLatestData(casesByCountry, db = connection) {
-    return db('timeseries').del()
-    .then(function () {
-        casesByCountry.then((c) => {
-            var latestData = Object.keys(c)
-            latestData.forEach((country) => {
+    casesByCountry.then((c) => {
+        var latestData = Object.keys(c)
+        latestData.forEach((country) => {
+            db('timeseries')
+            .join('country', 'timeseries.country_id', 'country.id')
+            .where('country.country', country)
+            .select('case_date as caseDate', 'country')
+            .then((currentData) => {
+                let casesToAdd = c[country].filter((caseData) => {
+                    return !currentData.some((entry) => {
+                        return entry.caseDate == caseData.date && country == entry.country
+                    })
+                })
+
                 db('country')
                 .where('country', country)
                 .first()
                 .then((countryRow) => {
-                    c[country].forEach ((data) => {
-                        //query of the existing if statement??? for stretch
-                        db('timeseries').insert({
-                            country_id: countryRow.id,
-                            case_date: data.date,
-                            confirmed_cases: data.confirmed,
-                            deaths: data.deaths,
-                            recovered: data.recovered
+                    let countryID = countryRow !== undefined ? countryRow.id: 0
+
+                    if(countryID != 0) {
+                        casesToAdd.forEach((data) => {
+                            db('timeseries').insert({
+                                country_id: countryID,
+                                case_date: data.date,
+                                confirmed_cases: data.confirmed,
+                                deaths: data.deaths,
+                                recovered: data.recovered
+                                })
+                                .then((id) => {
+                                    console.log('id ' + id + ' with ' + data.date + ' added for ' + country)
+                                })
+                                .catch ((err) => {
+                                    console.error(err)
+                                })
                         })
-                        .then()
-                    })
+                    }
                 })
-            })
+            }) 
         })
     })
 }
+
+//WORKING CODE!!!!!!!
+// function saveLatestData(casesByCountry, db = connection) {
+//     return db('timeseries').del()
+//     .then(function () {
+//         casesByCountry.then((c) => {
+//             var latestData = Object.keys(c)
+//             latestData.forEach((country) => {
+//                 db('country')
+//                 .where('country', country)
+//                 .first()
+//                 .then((countryRow) => {
+//                     c[country].forEach ((data) => {
+//                         //query of the existing if statement??? for stretch
+//                         db('timeseries').insert({
+//                             country_id: countryRow.id,
+//                             case_date: data.date,
+//                             confirmed_cases: data.confirmed,
+//                             deaths: data.deaths,
+//                             recovered: data.recovered
+//                         })
+//                         .then()
+//                     })
+//                 })
+//             })
+//         })
+//     })
+// }
 
 function initialiseCountry(db = connection) {
     return db('country').del()
