@@ -29,11 +29,3 @@ function formatDate(dateToFormat) {
 function sleep (time) {
     return new Promise((resolve) => setTimeout(resolve, time));
   }
-
-// function myFunction() {
-//     let selectedCountry = document.getElementById('countries').value
-
-//     if( selectedCountry !== '') {
-//         window.location = "/country/"+selectedCountry
-//     }
-// } 

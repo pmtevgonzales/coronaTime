@@ -162,4 +162,4 @@ function selectCountryData(id, db = connection) {
 //    console.log(c) 
 // })
 
-// saveLatestData(getTimeseriesFromJSON())
+saveLatestData(getTimeseriesFromJSON())
