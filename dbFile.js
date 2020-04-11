@@ -78,33 +78,6 @@ function saveLatestData(casesByCountry, db = connection) {
     })
 }
 
-//WORKING CODE!!!!!!!
-// function saveLatestData(casesByCountry, db = connection) {
-//     return db('timeseries').del()
-//     .then(function () {
-//         casesByCountry.then((c) => {
-//             var latestData = Object.keys(c)
-//             latestData.forEach((country) => {
-//                 db('country')
-//                 .where('country', country)
-//                 .first()
-//                 .then((countryRow) => {
-//                     c[country].forEach ((data) => {
-//                         //query of the existing if statement??? for stretch
-//                         db('timeseries').insert({
-//                             country_id: countryRow.id,
-//                             case_date: data.date,
-//                             confirmed_cases: data.confirmed,
-//                             deaths: data.deaths,
-//                             recovered: data.recovered
-//                         })
-//                         .then()
-//                     })
-//                 })
-//             })
-//         })
-//     })
-// }
 
 function initialiseCountry(db = connection) {
     return db('country').del()
