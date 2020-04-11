@@ -123,6 +123,8 @@ function initialiseCountry(db = connection) {
     })
 }
 
+//function for getting the timeseries records
+//NOTE!!!!need to work on having the data dates updated and need to change the query accdg to my database
 function getGlobalData(db = connection) {
     return db('timeseries')
     .select('case_date as caseDate',db.raw('SUM(confirmed_cases) as confirmedCases'),db.raw('SUM(deaths) as deaths'),db.raw('SUM(recovered) as recovered'))
@@ -130,26 +132,6 @@ function getGlobalData(db = connection) {
     .orderBy('case_date', 'desc')
     .first()
 }
-
-//function for getting the timeseries records
-//NOTE!!!!need to work on having the data dates updated and need to change the query accdg to my database
-// function getGlobalData(db = connection) {
-//     let today = new Date();
-//     let dd = String(today.getDate()-2);// change the numbers
-//     let mm = String(today.getMonth() + 1); 
-//     let yyyy = today.getFullYear();
-
-//     today = yyyy + '-' + mm + '-' + dd;
-//     return db('timeseries')
-//     .where('case_date',today)
-//     .select('confirmed_cases', 'deaths', 'recovered')
-//     .then((cases) => {
-//         let confirmedCase = cases.map(c => c.confirmed_cases).reduce((a, b) => a + b);
-//         let deaths = cases.map(c => c.deaths).reduce((a, b) => a + b);
-//         let recovered = cases.map(c => c.recovered).reduce((a, b) => a + b);
-//         return {confirmedCase, deaths, recovered}
-//     })
-// }
 
 //function for the dropdown select country
 function selectCountryDrop(db = connection) {
