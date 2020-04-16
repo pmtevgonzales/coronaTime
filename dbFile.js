@@ -17,6 +17,7 @@ module.exports = {
 //to have the JSON file as object 
 function getTimeseriesFromJSON() {
     //this url is the data from Johns Hopkins CSSE regarding COVID-19 that transforms into a json file updated daily.
+    //data coming from US Standard Time results to 1-2 days delay
     let url = "https://pomber.github.io/covid19/timeseries.json"
     let settings = { method: "Get" }
     
@@ -33,7 +34,6 @@ function getCountriesFromJSON() {
 }
 
 //insert the object from the JSON to the database/sqlite
-
 function saveLatestData(casesByCountry, db = connection) {
     return casesByCountry.then((c) => {
         let latestData = Object.keys(c)
@@ -97,13 +97,18 @@ function initialiseCountry(db = connection) {
 }
 
 //function for getting the timeseries records
-//NOTE!!!!need to work on having the data dates updated and need to change the query accdg to my database
 function getGlobalData(db = connection) {
     return db('timeseries')
     .select('case_date as caseDate',db.raw('SUM(confirmed_cases) as confirmedCases'),db.raw('SUM(deaths) as deaths'),db.raw('SUM(recovered) as recovered'))
     .groupBy('case_date')
-    .orderBy('case_date', 'desc')
-    .first()
+    .then ((cases) => {
+        return cases.sort((a, b) => {
+            return new Date(b.caseDate) - new Date(a.caseDate)
+        })
+    })
+    .then((cases) => {
+        return cases[0]
+    })
 }
 
 //function for the dropdown select country
@@ -125,14 +130,10 @@ function selectCountryData(id, db = connection) {
             'recovered'
             )
     .groupBy('case_date')
-    .orderBy('case_date', 'desc')
+    .then ((cases) => {
+        return cases.sort((a, b) => {
+            return new Date(b.caseDate) - new Date(a.caseDate)
+        })
+    })
 }
 
-
-
-
-// var latest = getGlobalData().then((c) =>{
-//    console.log(c) 
-// })
-
-saveLatestData(getTimeseriesFromJSON())
