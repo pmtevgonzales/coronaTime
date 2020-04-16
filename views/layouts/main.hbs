@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="/main.css"/>
-    <link rel="stylesheet" type="text/css" href="your/bulma/path/bulma.css"/>
-    {{!-- <link rel="stylesheet" href="styles/debu.css"> --}}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Corona Time</title>
+    <link rel="stylesheet" href="./styles/main.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.8.2/css/bulma.css" />
+    {{!-- <link rel="stylesheet" href="./styles/debug.css" /> --}}
   </head>
   <body>
-    <div id="root">
+    <div class="container">
       <h1><a href='/' class="header-select_logo">COVID-19 Notifier</a></h1>
       <div class="app">
         {{{body}}}
       </div>
-        {{>footer}}
-    </div>
+      {{>footer}}
+      
     <script>
       window.onload = function() {
           /* Update the date every second */

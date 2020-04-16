@@ -7,3 +7,10 @@
     background-size: cover;
     background-position: center
 } */
+.navbar-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items:  center;
+}
