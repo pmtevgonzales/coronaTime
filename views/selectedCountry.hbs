@@ -1,25 +1,31 @@
-<h2>{{countryName}}{{countryFlag}}</h2>
-<p><strong id="currentDate">{{currentDate}}</strong></p>
-<p><strong>As of {{caseDate}} </strong></p>
 <div>
-    <ul>
-        <li>Confirmed Case: {{cases}}</li>
-        <li>Cases Today: {{casesToday}}</li>
-        <li>Recovered: {{recovered}}</li>
-        <li>Deaths: {{deaths}}</li>
-        <li>Deaths Today: {{deathsToday}}</li>
-    </ul>
+    <section class="country-data">
+        <header>
+            <h2>{{countryName}}{{countryFlag}}</h2>
+                <p><strong id="currentDate">{{currentDate}}</strong></p>
+                <p><strong>As of {{caseDate}} </strong></p>
+        </header>
+        <section class="country-data_cov">
+            <article class="country-data_cases">
+            <h3>CONFIRMED CASES</h3>
+            <span>{{cases}}</span>
+            </article>
+            <article class="country-data_casestoday">
+            <h3>CASES TODAY</h3>
+            <span>{{casesToday}}</span>
+            </article>
+            <article class="country-data_recovered">
+            <h3>RECOVERED</h3>
+            <span>{{recovered}}</span>
+            </article>
+            <article class="country-data_deaths">
+            <h3>DEATHS</h3>
+            <span>{{deaths}}</span>
+            </article>
+            <article class="country-data_deathstoday">
+            <h3>DEATHS TODAY</h3>
+            <span>{{deathsToday}}</span>
+            </article>
+        </section>
+    </section>
 </div>
-
-<script>
-    window.onload = function() {
-        /* Update the date every second */
-        window.setInterval(function() {
-            updateDate()
-        }, 1000)
-    }
-
-    function updateDate() {
-        document.getElementById('currentDate').innerHTML = (new Date()).toString()
-    }
-</script>

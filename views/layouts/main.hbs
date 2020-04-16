@@ -2,14 +2,37 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="/main.css">
     <title>Corona Time</title>
     {{!-- <script src="../../utilities.js" type="text/javascript"></script> --}}
   </head>
   <body>
-    <h1><a href='/'>COVID-19 Notifier</a></h1>
+    <div id="root">
+      <h1><a href='/' class="header-select_logo">COVID-19 Notifier</a></h1>
       <div class="app">
         {{{body}}}
-        {{>footer}}
       </div>
+        {{>footer}}
+    </div>
+    <script>
+      window.onload = function() {
+          /* Update the date every second */
+          window.setInterval(function() {
+              updateDate()
+          }, 1000)
+      }
+
+      function updateDate() {
+          document.getElementById('currentDate').innerHTML = (new Date()).toString()
+      }
+
+      function myFunction() {
+          let selectedCountry = document.getElementById('countries').value
+
+          if( selectedCountry !== '') {
+              window.location = "/country/"+selectedCountry
+          }
+      } 
+    </script>
   </body>
 </html>

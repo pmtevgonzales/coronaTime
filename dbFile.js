@@ -115,7 +115,9 @@ function getGlobalData(db = connection) {
 function selectCountryDrop(db = connection) {
     return db('country')
     .select('id', 'country', 'flag')
+    .orderBy('country')
 }
+
 
 //function to know the details on the selected country
 function selectCountryData(id, db = connection) {

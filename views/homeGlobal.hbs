@@ -1,49 +1,38 @@
-<h2> GLOBAL CASES </h2>
-<p><strong id="currentDate">{{currentDate}}</strong></p>
-<p><strong>As of {{caseDate}} </strong></p>
+<header class="header-select">
+    <div>
+        <form>
+        <select id="countries" class="header-dropdown_countries">
+            {{#each countries}}
+            <option value="{{id}}">{{country}}{{flag}}</option>
+            {{/each}}
+        </select>
+        <input type='button' onclick="myFunction()" value="Submit"/>
+        </form>
+    </div>
+</header>
 <div>
-    <form method="POST" action="/latestUpdate">
-        <button type='submit'>Get Latest Update</button>
-    </form>
+    <section class="all-data_glob">
+        <h2> GLOBAL CASES </h2>
+            <p><strong id="currentDate">{{currentDate}}</strong></p>
+            <p><strong>As of {{caseDate}} </strong></p>
+        <div class="lates-update">
+            <form method="POST" action="/latestUpdate">
+                <button type='submit'>Get Latest Update</button>
+            </form>
+        </div>
+        <div class="all-data_cov">
+            <article class="all-data_cases">
+            <h3>CONFIRMED CASES</h3>
+            <span>{{confirmedCases}}</span>
+            </article>
+            <article class="all-data_recovered">
+            <h3>RECOVERED</h3>
+            <span>{{recovered}}</span>
+            </article>
+            <article class="all-data_deaths">
+            <h3>DEATHS</h3>
+            <span>{{deaths}}</span>
+            </article> 
+        </div>
+    </section>
 </div>
-
-<div>
-    <ul>
-        <li>Confirmed Case: {{confirmedCases}}</li>
-        <li>Recovered: {{recovered}}</li>
-        <li>Deaths: {{deaths}}</li>
-    </ul>
-</div>
-
-<div>
-    <label>Select Country:</label>
-    <form>
-    <select id="countries">
-        {{#each countries}}
-        <option value="{{id}}">{{country}}{{flag}}</option>
-        {{/each}}
-    </select>
-    <input type='button' onclick="myFunction()" value="Submit"/>
-    </form>
-</div>
-
-<script>
-    window.onload = function() {
-        /* Update the date every second */
-        window.setInterval(function() {
-            updateDate()
-        }, 1000)
-    }
-
-    function updateDate() {
-        document.getElementById('currentDate').innerHTML = (new Date()).toString()
-    }
-
-    function myFunction() {
-        let selectedCountry = document.getElementById('countries').value
-
-        if( selectedCountry !== '') {
-            window.location = "/country/"+selectedCountry
-        }
-    } 
-</script>

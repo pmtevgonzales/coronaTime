@@ -22,6 +22,7 @@ router.get('/', (req, res) => {
     }
     db.selectCountryDrop().then(c =>{
       c.unshift({})
+      c.unshift({country:'SELECT COUNTRY'})
       viewData.countries = c
       res.render(template, viewData)
     })
