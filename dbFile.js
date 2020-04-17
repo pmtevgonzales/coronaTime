@@ -139,3 +139,5 @@ function selectCountryData(id, db = connection) {
     })
 }
 
+//function to be called to update when you click get latest update in the backgraound
+saveLatestData(getTimeseriesFromJSON())
