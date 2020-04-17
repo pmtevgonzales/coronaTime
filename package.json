@@ -1,5 +1,5 @@
 {
-  "name": "COVID-19 Tracker",
+  "name": "coronavirus-19-globaltracker",
   "version": "1.0.0",
   "description": "Current COVID19 cases(active cases, deaths, recoveries and other stuff)each country.",
   "main": "index.js",
