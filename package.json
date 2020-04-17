@@ -7,7 +7,8 @@
     "knex": "knex",
     "dev": "nodemon --ext js,hbs index.js",
     "test": "jest --watch --noStackTrace",
-    "start": "node index"
+    "start": "node index",
+    "postinstall": "knex migrate:latest"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
     "express-handlebars": "^4.0.1",
     "knex": "^0.20.13",
     "node-fetch": "^2.6.0",
+    "pg": "^8.0.2",
     "sqlite3": "^4.1.1"
   },
   "devDependencies": {
