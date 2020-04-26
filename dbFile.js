@@ -46,7 +46,9 @@ function saveLatestData(casesByCountry, db = connection) {
 
                 let casesToAdd = c[country].filter((caseData) => {
                     return !currentData.some((entry) => {
-                        return new Date(entry.caseDate) == new Date(caseData.date) && country == entry.country
+                        let entryDate = new Date(entry.caseDate)
+                        let caseDate = new Date(caseData.date)
+                        return entryDate.toDateString() == caseDate.toDateString() && country == entry.country
                     })
                 })
 
