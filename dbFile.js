@@ -34,7 +34,8 @@ function getCountriesFromJSON() {
 
 //insert the object from the JSON to the database/sqlite
 function saveLatestData(casesByCountry, db = connection) {
-    return casesByCountry.then((c) => {
+    let inserts = []
+    casesByCountry.then((c) => {
         let latestData = Object.keys(c)
         latestData.forEach((country) => {
             db('timeseries')
@@ -56,7 +57,7 @@ function saveLatestData(casesByCountry, db = connection) {
 
                     if(countryID != 0) {
                         casesToAdd.forEach((data) => {
-                            db('timeseries').insert({
+                            inserts.push(db('timeseries').insert({
                                 country_id: countryID,
                                 case_date: data.date,
                                 confirmed_cases: data.confirmed,
@@ -69,31 +70,57 @@ function saveLatestData(casesByCountry, db = connection) {
                                 .catch ((err) => {
                                     console.error(err)
                                 })
+                            )
                         })
                     }
                 })
             }) 
         })
     })
+    return Promise.all(inserts)
+    .then()
+    .catch((err) => {
+        console.error(err)
+    })
 }
 
 
 function initialiseCountry(db = connection) {
-    return db('country').del()
-    .then(function () {
-        getCountries().then((c) => {
-            var countries = Object.keys(c)
-            countries.forEach((country) => {
-                db('country').insert({
-                    country: country,
-                    flag: c[country].flag,
-                    code: c[country].code
+    let inserts = []
+    getCountriesFromJSON().then((c) => {
+        var countries = Object.keys(c)
+        db('country')
+            .select('country')
+            .then((cInDB)=>{
+                countries.forEach((country) => {
+                    if (cInDB.find(countryInDb => countryInDb.country === country) == null){
+                        inserts.push(db('country').insert({
+                            country: country,
+                            flag: c[country].flag,
+                            code: c[country].code
+                        })
+                        .then((id) => {
+                            console.log('id ' + id + ' with ' + country)
+                        })
+                        .catch ((err) => {
+                            console.error(err)
+                        })
+                        )
+                    }   
                 })
-                .then()
             })
-        })
+    })
+    
+    return Promise.all(inserts)
+    .then(() => {
+        return db('country').select()
+    })
+    .catch((err) => {
+        console.error(err)
     })
 }
+
+
 
 //function for getting the timeseries records
 function getGlobalData(db = connection) {
@@ -138,5 +165,3 @@ function selectCountryData(id, db = connection) {
     })
 }
 
-//function to be called to update when you click get latest update in the backgraound
-saveLatestData(getTimeseriesFromJSON())

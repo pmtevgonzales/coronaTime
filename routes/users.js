@@ -11,24 +11,29 @@ module.exports = router
 //routes for mainPage
 router.get('/', (req, res) => {
   const template = 'homeGlobal'
-  db.getGlobalData()
-  .then((globalData) => {
-      const viewData = {
-      currentDate: utilities.dateToday(),
-      caseDate: utilities.formatDate(globalData.caseDate),
-      confirmedCases: globalData.confirmedCases,
-      deaths: globalData.deaths,
-      recovered: globalData.recovered
-    }
-    db.selectCountryDrop().then(c =>{
-      c.unshift({})
-      c.unshift({country:'SELECT COUNTRY'})
-      viewData.countries = c
-      res.render(template, viewData)
+  //1st initializeCountry
+  db.initialiseCountry()
+  .then ((countries) => {
+    db.saveLatestData(db.getTimeseriesFromJSON())
+    .then(() => {
+      db.getGlobalData()
+      .then((globalData) => {
+        countries.unshift({})
+        countries.unshift({country:'SELECT COUNTRY'})
+          const viewData = {
+          currentDate: utilities.dateToday(),
+          caseDate: utilities.formatDate(globalData.caseDate),
+          confirmedCases: globalData.confirmedCases,
+          deaths: globalData.deaths,
+          recovered: globalData.recovered,
+          countries: countries
+        }
+        res.render(template, viewData)
+      })
+      .catch(err => {
+        res.status(500).send('DATABASE ERROR: ' + err.message)
+      })
     })
-  })
-  .catch(err => {
-    res.status(500).send('DATABASE ERROR: ' + err.message)
   })
 })
 
@@ -52,10 +57,8 @@ router.get('/country/:id', (req, res) => {
         casesToday: countryDataToday.confirmedCases - countryDataYesterday.confirmedCases,
         deathsToday: countryDataToday.deaths - countryDataYesterday.deaths
       }
-
       res.render(template, viewData)
     })
-
 })
 
 // routes for refreshing the mainpage
@@ -68,3 +71,4 @@ router.post ('/latestUpdate', (req, res) => {
     })
   })
 })
+
