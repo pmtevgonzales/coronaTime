@@ -43,9 +43,10 @@ function saveLatestData(casesByCountry, db = connection) {
             .where('country.country', country)
             .select('case_date as caseDate', 'country')
             .then((currentData) => {
+
                 let casesToAdd = c[country].filter((caseData) => {
                     return !currentData.some((entry) => {
-                        return entry.caseDate == caseData.date && country == entry.country
+                        return new Date(entry.caseDate) == new Date(caseData.date) && country == entry.country
                     })
                 })
 
@@ -53,7 +54,6 @@ function saveLatestData(casesByCountry, db = connection) {
                 .where('country', country)
                 .first()
                 .then((countryRow) => {
-                    console.log(countryRow)
                     let countryID = countryRow !== undefined ? countryRow.id: 0
 
                     if(countryID != 0) {
@@ -66,7 +66,7 @@ function saveLatestData(casesByCountry, db = connection) {
                                 recovered: data.recovered
                                 })
                                 .then(() => {
-                                    //console.log('new cases: ' + data.confirmed + ' on ' + data.date + ' added for ' + country)
+                                    console.log('new cases: ' + data.confirmed + ' on ' + data.date + ' added for ' + country)
                                 })
                                 .catch ((err) => {
                                     console.error(err)
