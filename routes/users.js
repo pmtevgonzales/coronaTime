@@ -40,7 +40,7 @@ router.get('/', (req, res) => {
 
 //router to link the on the selectedCountry page
 router.get('/country/:id', (req, res) => {
-  const id = parseInt(req.params.id)
+  const id = Number(req.params.id)
   const template = 'selectedCountry'
   db.selectCountryData(id)
     .then((country) => {
@@ -50,11 +50,11 @@ router.get('/country/:id', (req, res) => {
         countryName: countryDataToday.country,
         countryFlag: countryDataToday.flag,
         currentDate: utilities.dateToday(),
-        caseDate: utilities.formatDate(countryDataToday.caseDate),
-        cases: countryDataToday.confirmedCases,
+        caseDate: utilities.formatDate(countryDataToday.casedate),
+        cases: countryDataToday.confirmedcases,
         deaths: countryDataToday.deaths,
         recovered: countryDataToday.recovered,
-        casesToday: countryDataToday.confirmedCases - countryDataYesterday.confirmedCases,
+        casesToday: countryDataToday.confirmedcases - countryDataYesterday.confirmedcases,
         deathsToday: countryDataToday.deaths - countryDataYesterday.deaths
       }
       res.render(template, viewData)

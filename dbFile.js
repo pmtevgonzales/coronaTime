@@ -155,15 +155,15 @@ function selectCountryData(id, db = connection) {
     .join('country', 'timeseries.country_id', 'country.id')
     .select('country', 
             'flag', 
-            'case_date as caseDate', 
-            'confirmed_cases as confirmedCases',
+            'case_date as casedate', 
+            'confirmed_cases as confirmedcases',
             'deaths',
             'recovered'
             )
     .groupBy('case_date')
     .then ((cases) => {
         return cases.sort((a, b) => {
-            return new Date(b.caseDate) - new Date(a.caseDate)
+            return new Date(b.casedate) - new Date(a.casedate)
         })
     })
 }
