@@ -63,12 +63,6 @@ router.get('/country/:id', (req, res) => {
 
 // routes for refreshing the mainpage
 router.post ('/latestUpdate', (req, res) => {
-  db.saveLatestData(db.getTimeseriesFromJSON())
-  .then(() => {
-    utilities.sleep(1000)
-    .then(()=>{
-      return res.redirect ('/')
-    })
-  })
+  return res.redirect ('/')
 })
 
