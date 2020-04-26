@@ -151,7 +151,7 @@ function selectCountryDrop(db = connection) {
 //function to know the details on the selected country
 function selectCountryData(id, db = connection) {
     return db ('timeseries')
-    .where('country_id', id)
+    .where('timeseries.country_id', id)
     .join('country', 'timeseries.country_id', 'country.id')
     .select('country', 
             'flag', 
@@ -160,7 +160,6 @@ function selectCountryData(id, db = connection) {
             'deaths',
             'recovered'
             )
-    .groupBy('case_date')
     .then ((cases) => {
         return cases.sort((a, b) => {
             return new Date(b.casedate) - new Date(a.casedate)
