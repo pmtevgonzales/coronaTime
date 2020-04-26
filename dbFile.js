@@ -65,7 +65,7 @@ function saveLatestData(casesByCountry, db = connection) {
                                 recovered: data.recovered
                                 })
                                 .then((addedCases) => {
-                                    console.log('id ' + addedCases.id + ' with ' + data.date + ' added for ' + country)
+                                    addedCases.forEach(a => console.log(a))
                                 })
                                 .catch ((err) => {
                                     console.error(err)
