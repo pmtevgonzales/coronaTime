@@ -40,6 +40,7 @@ router.get('/', (req, res) => {
 
 //router to link the on the selectedCountry page
 router.get('/country/:id', (req, res) => {
+  console.log(req.params.id)
   const id = Number(req.params.id)
   const template = 'selectedCountry'
   db.selectCountryData(id)
