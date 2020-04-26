@@ -128,7 +128,7 @@ function initialiseCountry(db = connection) {
 //function for getting the timeseries records
 function getGlobalData(db = connection) {
     return db('timeseries')
-    .select('case_date as caseDate',db.raw('SUM(confirmed_cases) as confirmedCases'),db.raw('SUM(deaths) as deaths'),db.raw('SUM(recovered) as recovered'))
+    .select('case_date as caseDate',db.raw('SUM(confirmed_cases) as confirmedcases'),db.raw('SUM(deaths) as deaths'),db.raw('SUM(recovered) as recovered'))
     .groupBy('case_date')
     .then ((cases) => {
         return cases.sort((a, b) => {
@@ -136,7 +136,6 @@ function getGlobalData(db = connection) {
         })
     })
     .then((cases) => {
-        console.log(cases[0])
         return cases[0]
     })
 }

@@ -23,7 +23,7 @@ router.get('/', (req, res) => {
           const viewData = {
           currentDate: utilities.dateToday(),
           caseDate: utilities.formatDate(globalData.caseDate),
-          confirmedCases: globalData.confirmedCases,
+          confirmedCases: globalData.confirmedcases,
           deaths: globalData.deaths,
           recovered: globalData.recovered,
           countries: countries
