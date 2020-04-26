@@ -65,7 +65,7 @@ function saveLatestData(casesByCountry, db = connection) {
                                 recovered: data.recovered
                                 })
                                 .then(() => {
-                                    console.log('new cases: ' + data.confirmed + ' with ' + data.date + ' added for ' + country)
+                                    console.log('new cases: ' + data.confirmed + ' on ' + data.date + ' added for ' + country)
                                 })
                                 .catch ((err) => {
                                     console.error(err)
