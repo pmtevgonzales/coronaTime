@@ -136,6 +136,7 @@ function getGlobalData(db = connection) {
         })
     })
     .then((cases) => {
+        console.log(cases[0])
         return cases[0]
     })
 }
