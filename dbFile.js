@@ -53,6 +53,7 @@ function saveLatestData(casesByCountry, db = connection) {
                 .where('country', country)
                 .first()
                 .then((countryRow) => {
+                    console.log(countryRow)
                     let countryID = countryRow !== undefined ? countryRow.id: 0
 
                     if(countryID != 0) {
